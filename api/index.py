@@ -22,7 +22,6 @@ HTML_TEMPLATE = """
         }
         .cyber-font { font-family: 'Orbitron', sans-serif; }
         
-        /* Ultra Glowing Neon Effects */
         .neon-title {
             color: #00ffcc;
             text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc, 0 0 35px #00b3b3;
@@ -33,21 +32,18 @@ HTML_TEMPLATE = """
             text-shadow: 0 0 8px #ff0055, 0 0 15px #ff0055;
         }
         
-        /* Futuristic Interface Borders */
         .cyber-panel {
             background: rgba(6, 10, 26, 0.95);
             border: 2px solid #00ffcc;
             box-shadow: 0 0 25px rgba(0, 255, 204, 0.2), inset 0 0 20px rgba(0, 255, 204, 0.1);
         }
         
-        /* Animated Matrix Background */
         .matrix-bg {
             background-image: linear-gradient(rgba(0, 255, 204, 0.04) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(0, 255, 204, 0.04) 1px, transparent 1px);
             background-size: 20px 20px;
         }
         
-        /* Running Cyber Laser Line */
         .laser-line {
             width: 100%;
             height: 3px;
@@ -77,17 +73,13 @@ HTML_TEMPLATE = """
         
         <div class="w-full">
             <div class="flex justify-between items-center text-[9px] text-cyan-400/70 mb-3 font-mono border-b border-cyan-500/20 pb-1">
-                <span>MAIN_FRAME: v6.0_POPUP</span>
+                <span>MAIN_FRAME: v6.2_STABLE</span>
                 <span class="animate-pulse text-emerald-400"><i class="fa-solid fa-circle"></i> OSINT_READY</span>
             </div>
 
             <div class="text-center mb-5">
-                <h1 class="text-2xl font-black cyber-font neon-title tracking-widest uppercase">
-                    Cyber Team Help
-                </h1>
-                <p class="text-[10px] text-pink-400 cyber-font font-bold tracking-widest mt-0.5 uppercase">
-                    [ Automated Intel Extraction ]
-                </p>
+                <h1 class="text-2xl font-black cyber-font neon-title tracking-widest uppercase">Cyber Team Help</h1>
+                <p class="text-[10px] text-pink-400 cyber-font font-bold tracking-widest mt-0.5 uppercase">[ Automated Intel Extraction ]</p>
             </div>
 
             <div class="space-y-3">
@@ -111,11 +103,10 @@ HTML_TEMPLATE = """
         </div>
 
         <div id="resultBox" class="hidden space-y-4">
-            
-            <div class="w-full bg-black/70 border border-cyan-500/40 rounded-lg p-4 relative shadow-[0_0_15px_rgba(0,255,204,0.1)] flex flex-col items-center">
+            <div class="w-full bg-black/70 border border-cyan-500/40 rounded-lg p-4 relative flex flex-col items-center">
                 <div class="absolute top-2 left-2 text-[8px] text-cyan-400/50 font-mono">NODE_DECRYPT: SUCCESS</div>
                 
-                <div class="w-20 h-20 rounded-full border-2 border-dashed border-cyan-400 flex items-center justify-center bg-cyan-950/20 mb-3 relative shadow-[0_0_15px_rgba(0,255,204,0.2)]">
+                <div class="w-20 h-20 rounded-full border-2 border-dashed border-cyan-400 flex items-center justify-center bg-cyan-950/20 mb-3 relative">
                     <i class="fa-solid fa-user-secret text-3xl text-cyan-400 animate-pulse"></i>
                     <div class="absolute bottom-0 right-0 w-4 h-4 bg-emerald-500 border-2 border-black rounded-full"></div>
                 </div>
@@ -148,11 +139,8 @@ HTML_TEMPLATE = """
 
         <div class="border-t border-cyan-500/20 pt-3 text-center w-full">
             <div class="text-[9px] tracking-widest text-gray-600 font-mono uppercase">POWERED BY:</div>
-            <div class="cyber-font font-black text-sm neon-credit tracking-widest mt-0.5 animate-pulse">
-                SHADOW JOKER
-            </div>
+            <div class="cyber-font font-black text-sm neon-credit tracking-widest mt-0.5 animate-pulse">SHADOW JOKER</div>
         </div>
-
     </div>
 
     <script>
@@ -169,29 +157,23 @@ HTML_TEMPLATE = """
             results.classList.add('hidden');
             loader.classList.remove('hidden');
 
-            setTimeout(() => {
-                fetch(`/api/track?phone=${encodeURIComponent(phoneInput)}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        loader.classList.add('hidden');
-                        if(data.status === "success") {
-                            // কার্ড ও টেবিল আপডেট
-                            document.getElementById('resPhoneCard').innerText = data.formatted_phone;
-                            document.getElementById('resPhoneTable').innerText = data.formatted_phone;
-                            
-                            // নতুন ট্যাবে/পপ-আপে ওপেন করার জন্য লিংক সেট
-                            document.getElementById('waLiveActionBtn').href = data.links.click_to_chat;
-                            
-                            results.classList.remove('hidden');
-                        } else {
-                            alert('EXPLOIT_FAILED: ' + data.message);
-                        }
-                    })
-                    .catch(err => {
-                        loader.classList.add('hidden');
-                        alert('CRITICAL_CRASH: Server node response error.');
-                    });
-            }, 1500); // স্মুথ লোডিং ট্র্যাকার টাইম
+            fetch(`/api/track?phone=${encodeURIComponent(phoneInput)}`)
+                .then(response => response.json())
+                .then(data => {
+                    loader.classList.add('hidden');
+                    if(data.status === "success") {
+                        document.getElementById('resPhoneCard').innerText = data.formatted_phone;
+                        document.getElementById('resPhoneTable').innerText = data.formatted_phone;
+                        document.getElementById('waLiveActionBtn').href = data.links.click_to_chat;
+                        results.classList.remove('hidden');
+                    } else {
+                        alert('EXPLOIT_FAILED: ' + data.message);
+                    }
+                })
+                .catch(err => {
+                    loader.classList.add('hidden');
+                    alert('CRITICAL_CRASH: Server response failure.');
+                });
         }
     </script>
 </body>
@@ -206,7 +188,7 @@ def home():
 def track():
     phone = request.args.get('phone')
     if not phone:
-        return jsonify({"status": "error", "message": "Phone number is required."}), 400
+        return jsonify({"status": "error", "message": "Phone number required"}), 400
         
     clean_phone = phone.replace("+", "").replace(" ", "").strip()
     
@@ -215,13 +197,10 @@ def track():
     elif len(clean_phone) == 10 and not clean_phone.startswith('0'):
         clean_phone = '880' + clean_phone
 
-    # target="_blank" এর সাথে মিল রেখে ব্রাউজার সাপোর্টেড অফিশিয়াল ওপেনিং পপআপ লিংক
-    links = {
-        "click_to_chat": f"https://api.whatsapp.com/send/?phone={clean_phone}&text&type=phone_number&app_absent=0"
-    }
-
     return jsonify({
         "status": "success",
         "formatted_phone": "+" + clean_phone,
-        "links": links
+        "links": {
+            "click_to_chat": f"https://api.whatsapp.com/send/?phone={clean_phone}&text&type=phone_number&app_absent=0"
+        }
     })
